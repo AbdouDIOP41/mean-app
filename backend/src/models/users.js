@@ -1,6 +1,44 @@
+const mongoose = require('mongoose');
+const { isEmail} = require('validator');
+const bcrypt = require('bcrypt');
 
 
-const database = require('@models/database.js');
+const UserSchema = new mongoose.Schema(
+    {
+        pseudo : {
+            type: String,
+            required: true,
+            minlength: 3,
+            maxlength: 65,
+            unique : true,
+            trim : true
+        },
+        email : {
+            type: String,
+            required: true,
+            validate : [isEmail],
+            lowercase : true,
+            unique : true,
+            trim : true
+        },
+        password : {
+            type: String,
+            required: true,
+            minlength: 4,
+            max: 1024,
+            trim : true
+        },
+        
+    },
+
+    {
+        timestamps: true,
+      }
+)
+
+
+
+/*const database = require('@models/database.js');
 
 
 const users = {
@@ -51,3 +89,4 @@ const users = {
 
 
 module.exports = users;
+*/
