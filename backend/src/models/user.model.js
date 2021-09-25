@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const { isEmail } = require('validator');
 const bcrypt = require('bcrypt');
+const TypeUser = require('./typeUser.model');
 
 const userSchema = new mongoose.Schema(
   {
@@ -26,6 +27,11 @@ const userSchema = new mongoose.Schema(
       max: 1024,
       minlength: 6
     },
+    typeUser: {
+      type: String,
+      default: TypeUser.BASIC,
+      required: false
+    }
   },
   {
     timestamps: true,
