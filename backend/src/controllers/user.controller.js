@@ -27,7 +27,7 @@ module.exports.updateUser = async (req, res) => {
     {
       $set: {
         pseudo: req.body.pseudo,
-        email: req.body.email,
+        email: req.body.email
       },
     },
     { new: true, upsert: true, setDefaultsOnInsert: true },
@@ -53,6 +53,34 @@ module.exports.deleteUser = async (req, res) => {
   } catch (err) {
     return res.status(500).json({ message: err });
   }
+};
+
+
+module.exports.toBePremium = async (req, res) => {
+  /*
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send("ID unknown : " + req.params.id);
+
+  await UserModel.findOneAndUpdate(
+    { _id: req.params.id },
+    {
+      $set: {
+        typeUser: "premium"
+      },
+    },
+    { new: true, upsert: true, setDefaultsOnInsert: true },
+    (err, docs) => {
+      if (!err) {
+        console.log('docs:',docs)
+        return res.status(201).send({res: "Mode Premium actived" });
+      }
+      if (err) {
+        return res.status(500).send({ message: err });
+      }
+    }
+  );
+  */
+ return 
 };
 
 

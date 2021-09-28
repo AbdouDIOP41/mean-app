@@ -12,7 +12,7 @@ export class TokenStorageService {
     return window.sessionStorage.removeItem(TOKEN_KEY);
   }
 
-  public saveToken(token: string, pseudo: string, id: string): void {
+  public saveToken(token: string): void {
     window.sessionStorage.setItem(TOKEN_KEY, token);
   }
 
@@ -21,7 +21,7 @@ export class TokenStorageService {
   }
 
   public decodeToken() : any {
-    return jwt_decode(TOKEN_KEY);
+    return jwt_decode(this.getToken());
   }
 }
 

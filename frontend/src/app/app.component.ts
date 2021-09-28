@@ -6,15 +6,16 @@ import { TokenStorageService } from './services/token-storage.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  private roles: string[] = [];
+  //private permission: string[] = [];
   isLoggedIn = false;
-  showUserPremium = false;
+  UserPremium = false;
   pseudo?: string;
 
   constructor(private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
+    //window.location.reload();
   }
 
   logout(): void {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { TokenStorageService } from '../services/token-storage.service';
 import { UserService } from '../services/user.service';
-import jwt_decode from "jwt-decode";
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,24 +16,32 @@ export class LoginComponent implements OnInit {
     password: null
   };
   isLoggedIn = false;
-  isLoginFailed = false;
   errorMessage = '';
   roles: any;
-  type = "";
+  type =  "" ;
+  pseudo = "";
+  msg = "";
 
   constructor(private authService: AuthService,
               private tokenStorage: TokenStorageService,
-              private userService: UserService) { }
+              private userService: UserService,
+              private router : Router) { }
 
   ngOnInit(): void {
+
       if (this.tokenStorage.getToken()) {
 
         this.isLoggedIn = true;
-        const token = this.tokenStorage.getToken();
-        var decoded:any = jwt_decode(token);
-        console.log(decoded);
+        this.router.navigate(['/user']);
+        this.type = this.userService.getTypeUser();
+        this.pseudo = this.userService.getInfoUser().pseudo;
+        this.userService.message = "Login successfull ! ";
 
-    }
+
+
+       // this.router.navigate( ['/profile'])
+      }
+
   }
 
   onSubmit(): void {
@@ -42,20 +50,17 @@ export class LoginComponent implements OnInit {
     this.authService.login(email, password).subscribe(
       data => {
         if(data.token){
-          this.tokenStorage.saveToken(data.token, data.pseudo, data.id);
-          this.isLoginFailed = false;
+          this.tokenStorage.saveToken(data.token);
           this.isLoggedIn = true;
-         // this.Location.replaceState('/');
+
         }
         else{
-          this.isLoginFailed = true;
           this.isLoggedIn = false;
         }
               //this.roles = this.tokenStorage.getUser().roles;
       },
       err => {
         this.errorMessage = err.error.message;
-        this.isLoginFailed = true;
       }
     );
   }

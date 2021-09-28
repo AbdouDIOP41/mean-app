@@ -10,7 +10,9 @@ router.get("/logout", authController.logout);
 router.get("/", userController.getAllUsers);
 router.get("/:id", userController.userInfo);
 router.put("/:id", userController.updateUser);
+router.get("/premium/:id", userController.toBePremium);
 router.delete("/:id", userController.deleteUser);
+
 
 
 module.exports = router;

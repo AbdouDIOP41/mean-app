@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { TokenStorageService } from '../services/token-storage.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -15,11 +17,12 @@ export class RegisterComponent implements OnInit {
     typeUser: null
   };
   isSuccessful = false;
-  isSignUpFailed = false;
   errorMessage = '';
   constructor(
     private authService: AuthService,
-    private tokenStorageService: TokenStorageService
+    private userService: UserService,
+    private tokenStorageService: TokenStorageService,
+    private router : Router
   ) {}
 
   ngOnInit(): void {}
@@ -31,17 +34,22 @@ export class RegisterComponent implements OnInit {
       (data) => {
         const token = data.token;
         if (token) {
-          this.tokenStorageService.saveToken(token, data.pseudo, data.id);
+          this.tokenStorageService.saveToken(token);
           this.isSuccessful = true;
-          this.isSignUpFailed = false;
+          //window.location.reload();
+          this.router.navigate(['/user']);
+          console.log(this.userService.getInfoUser());
+
+          this.userService.message = "Your registration is successful !"
+
+
         } else {
           this.isSuccessful = false;
-          this.isSignUpFailed = true;
         }
       },
       (err) => {
         this.errorMessage = err.error.message;
-        this.isSignUpFailed = true;
+        this.isSuccessful = false;
       }
     );
   }

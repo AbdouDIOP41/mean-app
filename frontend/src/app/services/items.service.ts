@@ -1,25 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TokenStorageService } from './token-storage.service';
-import jwt_decode from "jwt-decode";
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ItemsService {
+  [x: string]: any;
+  typeUser = {
+    BASIC: 'basic',
+    PREMIUM: 'premium',
+  }
 
-  constructor(private http: HttpClient, private tokenStorageService: TokenStorageService) {}
+  constructor(private http: HttpClient, private userService : UserService) {}
     getApiData(){
       return this.http.get('https://jsonplaceholder.typicode.com/photos')
     }
 
     filterDataByUser(allItems: any){
-      const token = this.tokenStorageService.getToken();
-      var decoded:any = jwt_decode(token);
-      const typeUser = decoded.typeUser
-      if(typeUser==="Basic"){
+      if(this.userService.getTypeUser() === this.typeUser.BASIC){
         return allItems.slice(0, 20)
       }
-      return allItems
+      return allItems.slice(0, 50)
     }
 }

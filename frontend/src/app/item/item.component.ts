@@ -12,23 +12,15 @@ export class ItemComponent implements OnInit {
 
   title = 'List items';
   items : any;
-  allItems: any;
+  //allItems: any;
 
   constructor(private itemsService : ItemsService) { }
 
   ngOnInit(): void {
 
     this.itemsService.getApiData().subscribe((data : any)  => {
-      this.allItems = data;
-      this.items = this.itemsService.filterDataByUser(this.allItems)
-      for(const item in this.items){
-      // console.log(this.items[item].albumId)
-        var x = this.registerPhotos(this.items[item]);
-        x.albumData.forEach(element => {
-          console.log("element " + element.id + ": ");
-          console.log(element)
-        });
-      }
+      //this.allItems = data;
+      this.items = this.itemsService.filterDataByUser(data)
     });
 
   }
