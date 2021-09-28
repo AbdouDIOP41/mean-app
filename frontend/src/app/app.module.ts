@@ -17,6 +17,7 @@ import { AuthService } from './services/auth.service';
 import { TokenStorageService } from './services/token-storage.service';
 
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { authInterceptorProviders } from './_helpers/auth.interceptor';
     UserComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

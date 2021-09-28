@@ -18,8 +18,11 @@ export class UserService {
     return this.http.get(API_URL + 'user_free', { responseType: 'text' });
   }
 
-  getUserPremium(): Observable<any> {
-    return this.http.get(API_URL + 'user_premiem', { responseType: 'text' });
+  getUserPremium(){
+    const token = this.tokenStorageService.getToken();
+    var decoded:any = jwt_decode(token);
+    console.log(decoded);
+   // return decoded
   }
   getPublicContent(): Observable<any> {
     return this.http.get(API_URL + 'all', { responseType: 'text' });
@@ -38,3 +41,7 @@ export class UserService {
     return this.http.get(API_URL + 'admin', { responseType: 'text' });
   }
 }
+function jwt_decode(token: any): any {
+  throw new Error('Function not implemented.');
+}
+

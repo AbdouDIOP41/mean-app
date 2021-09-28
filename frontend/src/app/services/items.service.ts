@@ -17,13 +17,9 @@ export class ItemsService {
       const token = this.tokenStorageService.getToken();
       var decoded:any = jwt_decode(token);
       const typeUser = decoded.typeUser
-      if(typeUser==="basic"){
+      if(typeUser==="Basic"){
         return allItems.slice(0, 20)
       }
       return allItems
-
     }
 }
-//fetch('https://jsonplaceholder.typicode.com/todos/1')
-  //.then(response => response.json())
-  //.then(json => console.log(json))

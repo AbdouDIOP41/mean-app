@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { TokenStorageService } from '../services/token-storage.service';
+import { UserService } from '../services/user.service';
+import jwt_decode from "jwt-decode";
 
 
 @Component({
@@ -16,14 +18,21 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
-  //roles: string[] = [];
+  roles: any;
+  type = "";
 
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { }
+  constructor(private authService: AuthService,
+              private tokenStorage: TokenStorageService,
+              private userService: UserService) { }
 
   ngOnInit(): void {
       if (this.tokenStorage.getToken()) {
+
         this.isLoggedIn = true;
-       // this.roles = this.tokenStorage.getUser().roles;
+        const token = this.tokenStorage.getToken();
+        var decoded:any = jwt_decode(token);
+        console.log(decoded);
+
     }
   }
 
@@ -36,6 +45,7 @@ export class LoginComponent implements OnInit {
           this.tokenStorage.saveToken(data.token, data.pseudo, data.id);
           this.isLoginFailed = false;
           this.isLoggedIn = true;
+         // this.Location.replaceState('/');
         }
         else{
           this.isLoginFailed = true;
